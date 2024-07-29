@@ -11,3 +11,4 @@ sudo ip link set up vcan0
 # Check its ok
 sudo ip link show vcan0
 ifconfig vcan0
+# ubuntu : sudo install can-utils

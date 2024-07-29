@@ -1,0 +1,5 @@
+.aider*
+c/sender
+c/sender.o
+can/can.o
+can/libcan.a 

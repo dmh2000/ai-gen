@@ -158,6 +158,8 @@ In separate shell
 candump vcan0
 ```
 
+Manually update .gitignore to exclude build artifacts
+
 #### IN DIRECTORY 'g'
 
 #### create go file

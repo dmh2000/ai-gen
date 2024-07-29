@@ -184,3 +184,9 @@ Using a good LLM trained for coding, you can generate POSSIBLE solutions to appl
 - fixing various syntax/definition errors can require knowing what to lookup. 
 - A good code review is important because who knows what the ai generated, even if it seems to work
   - in this case, I used a different product called Codium.AI for code review. That's codium , not codeium with an 'e'.
+  - it found a couple of things in the main.go file
+    - unsafe pointer and string convertion error handling
+  - if found a couple of things in the can.c file
+    - avoid copy overflows
+      - using strncpy instead of strcpy
+      - use sizeof linux_frame.data in memcpy

@@ -24,7 +24,7 @@ int open_can_socket(const char *ifname) {
     }
 
     // Get the interface index
-    strcpy(ifr.ifr_name, ifname);
+    strncpy(ifr.ifr_name, ifname,sizeof(ifr.ifr_name));
     if (ioctl(socket_fd, SIOCGIFINDEX, &ifr) < 0) {
         perror("Error getting interface index");
         close(socket_fd);

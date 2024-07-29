@@ -10,6 +10,7 @@ package main
 import "C"
 import (
 	"fmt"
+	"unsafe"
 )
 
 const (
@@ -38,14 +39,12 @@ func main() {
 		}
 
 		if frame.id == C.int32_t(canID) {
-			// Convert the first 4 bytes of data to a 32-bit integer
-			value := uint32(frame.data[0]) |
-				(uint32(frame.data[1]) << 8) |
-				(uint32(frame.data[2]) << 16) |
-				(uint32(frame.data[3]) << 24)
-
-			fmt.Printf("Received CAN frame: ID=0x%X, Length=%d, Value=%d (0x%X)\n",
-				frame.id, frame.len, value, value)
+			fmt.Printf("Received CAN frame: ID=0x%X, Length=%d, Data=", frame.id, frame.len)
+			data := (*[8]byte)(unsafe.Pointer(&frame.data[0]))
+			for i := 0; i < int(frame.len); i++ {
+				fmt.Printf("%02X ", data[i])
+			}
+			fmt.Println()
 		}
 	}
 }

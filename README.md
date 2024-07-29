@@ -166,18 +166,19 @@ Manually update .gitignore to exclude build artifacts
 `create a main.go file in directory 'g' and add an empty main function`
 
 #### add code to receive can messages
-in the file g/main.go, add code to receive from a can socket using the library can/libcan.h, use cgo for this
 
-#### ERROR 'frame.can_dlc not found'
-
-linux/can.h uses a packaged union for can_frame. cgo doesn't properly handle packed structs/unions. looking at the cgo definition of can_frame, the symbol 'anon0[1]' is in place of the packed union for the data length.
-
-`replace the line "dlc := frame.can_dlc" to "dlc := int(frame.anon[0])"`
+` in the file g/main.go, add code to receive from a can socket using the library can/can.h. use can id 0x123. use 'cgo' for this`
 
 #### get rid of unsafe pointers
 
-`in main.go, instead of using ifname as a discrete variable, make the interface name as a global constant with value 'vcan0', and use C.Cstring directly in the call to open_can_socket to void using an unsafe pointer directly `
+`in g/main.go, insteead of using an unsafe pointer to the can frame data, assume the value received is a 32 bit signed integer. convert the bytes to a 32 bit signed integer using shifts and adds.`
 
-`in main.go instead of using an unsafe pointer and binary encoding, read the frame dta bytes and conver them to an int using shifts and add. assume the value received will be a 32 bit int  `
+WORKING
 
-#### in file c/sender.c change the CAN_ID to 100
+## Conclusion
+
+Using a good LLM trained for coding, you can generate POSSIBLE solutions to applications. There are a couple of cases in this demo that point out that a knowledgable developer is needed.
+- Designing the interface for the C language CAN functions required knowing what is needed. 
+- fixing various syntax/definition errors can require knowing what to lookup. 
+- A good code review is important because who knows what the ai generated, even if it seems to work
+  - in this case, I used a different product called Codium.AI for code review. That's codium , not codeium with an 'e'.

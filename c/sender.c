@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <time.h>
 #include "../can/can.h"
 
 #define CAN_INTERFACE "vcan0"
-#define SEND_INTERVAL_US 100000  // 100,000 microseconds = 0.1 seconds (10 Hz)
+#define SEND_INTERVAL_NS 100000000  // 100,000,000 nanoseconds = 0.1 seconds (10 Hz)
 
 int main() {
     int socket_fd;
@@ -38,7 +38,8 @@ int main() {
         count++;
 
         // Sleep for the specified interval
-        usleep(SEND_INTERVAL_US);
+        struct timespec ts = {0, SEND_INTERVAL_NS};
+        nanosleep(&ts, NULL);
     }
 
     // Close CAN socket

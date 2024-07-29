@@ -9,6 +9,7 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 #include <linux/if.h>
+#include <stdint.h>
 
 int open_can_socket(const char *ifname) {
     int socket_fd;
@@ -42,16 +43,16 @@ int open_can_socket(const char *ifname) {
     return socket_fd;
 }
 
-int write_can_frame(int socket_fd, int can_id, const unsigned char *data, int data_length) {
-    struct can_frame frame;
+int write_can_frame(int socket_fd, can_frame_t frame) {
+    struct can_frame linux_frame;
     
     // Prepare the CAN frame
-    frame.can_id = can_id;
-    frame.can_dlc = data_length;
-    memcpy(frame.data, data, data_length);
+    linux_frame.can_id = frame.id;
+    linux_frame.can_dlc = frame.len;
+    memcpy(linux_frame.data, frame.data, frame.len);
 
     // Write the frame to the socket
-    if (write(socket_fd, &frame, sizeof(struct can_frame)) != sizeof(struct can_frame)) {
+    if (write(socket_fd, &linux_frame, sizeof(struct can_frame)) != sizeof(struct can_frame)) {
         perror("Error writing CAN frame");
         return -1;
     }
@@ -59,8 +60,9 @@ int write_can_frame(int socket_fd, int can_id, const unsigned char *data, int da
     return 0;
 }
 
-int read_can_frame(int socket_fd, struct can_frame *frame) {
-    int nbytes = read(socket_fd, frame, sizeof(struct can_frame));
+int read_can_frame(int socket_fd, can_frame_t *frame) {
+    struct can_frame linux_frame;
+    int nbytes = read(socket_fd, &linux_frame, sizeof(struct can_frame));
     
     if (nbytes < 0) {
         perror("Error reading CAN frame");
@@ -71,6 +73,11 @@ int read_can_frame(int socket_fd, struct can_frame *frame) {
         fprintf(stderr, "Incomplete CAN frame\n");
         return -1;
     }
+
+    // Convert linux_frame to can_frame_t
+    frame->id = linux_frame.can_id;
+    frame->len = linux_frame.can_dlc;
+    memcpy(frame->data, linux_frame.data, linux_frame.can_dlc);
 
     return 0;
 }

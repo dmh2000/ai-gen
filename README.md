@@ -173,6 +173,8 @@ Manually update .gitignore to exclude build artifacts
 
 `in g/main.go, insteead of using an unsafe pointer to the can frame data, assume the value received is a 32 bit signed integer. convert the bytes to a 32 bit signed integer using shifts and adds.`
 
+`fix the 
+
 WORKING
 
 ## Conclusion

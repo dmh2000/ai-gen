@@ -10,6 +10,7 @@ package main
 import "C"
 import (
 	"fmt"
+	"unsafe"
 )
 
 const (
@@ -18,8 +19,16 @@ const (
 )
 
 func main() {
+
+	canInterfaceCString := C.CString(canInterface)
+	if canInterfaceCString == nil {
+		fmt.Println("Failed to convert canInterface to C string")
+		return
+	}
+	defer C.free(unsafe.Pointer(C.CString(canInterface)))
+
 	// Open CAN socket
-	socketFd := C.open_can_socket(C.CString(canInterface))
+	socketFd := C.open_can_socket(canInterfaceCString)
 	if socketFd < 0 {
 		fmt.Println("Failed to open CAN socket")
 		return

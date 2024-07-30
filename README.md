@@ -1,5 +1,16 @@
-# Code Generation with Anthropic and Aider-chat
+---
+---
+![Slide 1](/anth1.png)
+---
+![Slide 2](/anth2.png)
+---
+![Slide 3](/anth3.png)
+---
 
+---
+<div style="font-size:2em;">
+
+# Code Generation with Anthropic Claude-1.5-Sonnel and Aider-chat
 ## SETUP
 
 ### 1. Clone starter repo from github
@@ -7,7 +18,7 @@
 ```sh
 >git clone https://github.com/dmh2000/ai-gen.git
 ```
-
+---
 ### 2. Setup Conda Virtual Environment
 
 Conda is a command line utility that lets you set up 'virtual environments' that include specific software dependencies that you can for a particular application. Its mostly used with Python. If you are developing with python, you probably should be using conda or its big brother Anaconda.
@@ -23,7 +34,7 @@ Its not the same as docker. Its not a container. Its just setups up a separate d
    conda activate aider
    pip install aider-chat
 ```
-
+---
 ### 3. Load VCAN Module
 Linux 'virtual CAN' creates a local CAN bus that can be used to test offline software using a CAN bus
 - CAN is a bus architecture
@@ -52,7 +63,7 @@ Linux 'virtual CAN' creates a local CAN bus that can be used to test offline sof
    ifconfig vcan0
 
 ```
-
+---
 ### 4. Configure Initial Directory Structure
 
 Set up an initial directory framework. Something simple.
@@ -73,7 +84,7 @@ Set up an initial directory framework. Something simple.
    tree
 ```
 
-
+---
 ### 5. Start of Aider conversation
 
 ```sh
@@ -188,3 +199,4 @@ Answers to the Questions
 - can it fix errors
   - yes but not consistently
   - it helps if the dev 
+</div>

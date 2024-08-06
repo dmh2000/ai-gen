@@ -35,7 +35,10 @@ func main() {
 		}
 
 		if frame.id == 0x100 {
-			count := *(*int32)(unsafe.Pointer(&frame.data[0]))
+			count := int32(frame.data[0]) |
+				int32(frame.data[1])<<8 |
+				int32(frame.data[2])<<16 |
+				int32(frame.data[3])<<24
 			fmt.Printf("Received: %d\n", count)
 		}
 	}

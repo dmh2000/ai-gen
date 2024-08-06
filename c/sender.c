@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <time.h>
 #include <stdint.h>
 #include "../can/can.h"
 
 #define CAN_INTERFACE "vcan0"
 #define CAN_ID 0x100
-#define LOOP_DELAY_US 100000  // 100,000 microseconds = 0.1 seconds (10 Hz)
+#define LOOP_DELAY_NS 100000000  // 100,000,000 nanoseconds = 0.1 seconds (10 Hz)
 
 int main() {
     int sock = open_can_socket(CAN_INTERFACE);
@@ -30,7 +30,8 @@ int main() {
         count++;
 
         // Sleep for 0.1 seconds (10 Hz)
-        usleep(LOOP_DELAY_US);
+        struct timespec ts = {0, LOOP_DELAY_NS};
+        nanosleep(&ts, NULL);
     }
 
     close_can_socket(sock);

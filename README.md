@@ -1,11 +1,10 @@
 ---
 ---
-
-## <img src="/anth1.png"/>
-
-## <img src="/anth2.png"/>
-
-## <img src="/anth3.png"/>
+<img src="./doc/anth1.png"/>
+---
+<img src="./doc/anth2.png"/>
+---
+<img src="./doc/anth3.png"/>
 
 ---
 

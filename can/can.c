@@ -69,7 +69,7 @@ int read_can_frame(int sock, struct can_frame_t *frame) {
         return -1;
     }
 
-    if (nbytes < sizeof(struct can_frame)) {
+    if ((size_t)nbytes < sizeof(struct can_frame)) {
         fprintf(stderr, "Incomplete CAN frame\n");
         return -1;
     }

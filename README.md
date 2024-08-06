@@ -1,4 +1,17 @@
-# Code Generation with Anthropic and Aider-chat
+---
+---
+
+## <img src="/anth1.png"/>
+
+## <img src="/anth2.png"/>
+
+## <img src="/anth3.png"/>
+
+---
+
+<div style="font-size:2em;">
+
+# Code Generation with Anthropic Claude-1.5-Sonnel and Aider-chat
 
 ## SETUP
 
@@ -6,7 +19,12 @@
 
 ```sh
 >git clone https://github.com/dmh2000/ai-gen.git
+>git status
+>git branch snc
+>git switch snc
 ```
+
+---
 
 ### 2. Setup Conda Virtual Environment
 
@@ -17,15 +35,19 @@ Its not the same as docker. Its not a container. Its just setups up a separate d
 - https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html
 
 ```sh
-   # conda create -n <venv-name>  python=3 
+   # conda create -n <venv-name>  python=3
    conda init
-   conda create -n aider python=3 
+   conda create -n aider python=3
    conda activate aider
    pip install aider-chat
 ```
 
+---
+
 ### 3. Load VCAN Module
+
 Linux 'virtual CAN' creates a local CAN bus that can be used to test offline software using a CAN bus
+
 - CAN is a bus architecture
 - There are not addresses, only messages
 - each message has an id
@@ -53,6 +75,8 @@ Linux 'virtual CAN' creates a local CAN bus that can be used to test offline sof
 
 ```
 
+---
+
 ### 4. Configure Initial Directory Structure
 
 Set up an initial directory framework. Something simple.
@@ -63,16 +87,17 @@ Set up an initial directory framework. Something simple.
    # install aider-chat
    # pip install aider-chat
    aider --version
-   
+
    # setup directory structure
    mkdir c
    mkdir can
    mkdir g
    cd g && go mod init can
-   mkdir ts 
+   mkdir ts
    tree
 ```
 
+---
 
 ### 5. Start of Aider conversation
 
@@ -86,14 +111,12 @@ aider
 #### create a library source for interfacing to VCAN
 
 `using the C language, implement functions to access a CAN bus using network sockets. The file should include functions that open, write,read and close a CAN socket. Write the file to can/can.c`
- 
 
 #### ERROR fix : struct ifreq ifr not defined
 
 Took a couple of minutes to look this up. There is a linux specific file required.
 
 `add the file 'linux/if.h to can/can.c`
-
 
 #### create the include file for can
 
@@ -116,11 +139,11 @@ I didn't like having to include the system file can.h in client code because it 
 
 #### WARNING type mismatch
 
-```text 
+```text
 canlib.c:71:16: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
    71 |     if (nbytes < sizeof(struct can_frame)) {
       |                ^
-```      
+```
 
 `in can/can.c change line 71 to add a cast (int)sizeof(struct can_frame)`
 
@@ -128,7 +151,7 @@ Rerun the Makefile
 
 - make (should build without warnigns)
 
-#### create a can bus client in directory 'c'. 
+#### create a can bus client in directory 'c'.
 
 `in directory 'c' create a file named sender.c. create a main function that opens a can socket. add a 32 bit signed integer variable named 'count' initialized to 0. add a loop that sends the contents of the variable count to the can bus socket at 10 Hz. increment count by 1 on each loop iteration`
 
@@ -145,6 +168,7 @@ usleep is deprecated. use nanosleep instead. nanosleep requires a newer version 
 `in file sender.c change the call to usleep to use nanosleep. add an argument to c/Makefile CFLAGS to define the macro \_POSIX_C_SOURCE=200000`
 
 #### Other fixes
+
 `in file sender.c include string.h to fix undefined memcpy`
 
 #### See if 'sender' runs
@@ -154,6 +178,7 @@ usleep is deprecated. use nanosleep instead. nanosleep requires a newer version 
 ```
 
 In separate shell
+
 ```sh
 candump vcan0
 ```
@@ -163,6 +188,7 @@ Manually update .gitignore to exclude build artifacts
 #### IN DIRECTORY 'g'
 
 #### create go file
+
 `create a main.go file in directory 'g' and add an empty main function`
 
 #### add code to receive can messages
@@ -173,20 +199,19 @@ Manually update .gitignore to exclude build artifacts
 
 `in g/main.go, insteead of using an unsafe pointer to the can frame data, assume the value received is a 32 bit signed integer. convert the bytes to a 32 bit signed integer using shifts and adds.`
 
-`fix the 
+`fix the
 
 WORKING
 
 ## Conclusion
 
-Using a good LLM trained for coding, you can generate POSSIBLE solutions to applications. There are a couple of cases in this demo that point out that a knowledgable developer is needed.
-- Designing the interface for the C language CAN functions required knowing what is needed. 
-- fixing various syntax/definition errors can require knowing what to lookup. 
-- A good code review is important because who knows what the ai generated, even if it seems to work
-  - in this case, I used a different product called Codium.AI for code review. That's codium , not codeium with an 'e'.
-  - it found a couple of things in the main.go file
-    - unsafe pointer and string convertion error handling
-  - if found a couple of things in the can.c file
-    - avoid copy overflows
-      - using strncpy instead of strcpy
-      - use sizeof linux_frame.data in memcpy
+Answers to the Questions
+
+- does it save time?
+  - yes it helps by generating boilerplate
+- does it work first time?
+  - sometimes
+- can it fix errors
+  - yes but not consistently
+  - it helps if the dev
+  </div>

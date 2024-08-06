@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <linux/can.h>
 #include <linux/can/raw.h>
+#include <linux/if.h>
 
 int open_can_socket(const char *ifname) {
     int sock;

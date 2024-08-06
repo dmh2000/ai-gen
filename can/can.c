@@ -9,6 +9,7 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 #include <linux/if.h>
+#include <stdint.h>
 
 int open_can_socket(const char *ifname) {
     int sock;
@@ -59,8 +60,9 @@ int write_can_frame(int sock, int can_id, const unsigned char *data, int data_le
     return 0;
 }
 
-int read_can_frame(int sock, struct can_frame *frame) {
-    int nbytes = read(sock, frame, sizeof(struct can_frame));
+int read_can_frame(int sock, struct can_frame_t *frame) {
+    struct can_frame kernel_frame;
+    int nbytes = read(sock, &kernel_frame, sizeof(struct can_frame));
     
     if (nbytes < 0) {
         perror("Error reading CAN frame");
@@ -71,6 +73,11 @@ int read_can_frame(int sock, struct can_frame *frame) {
         fprintf(stderr, "Incomplete CAN frame\n");
         return -1;
     }
+
+    // Convert kernel_frame to our custom can_frame_t
+    frame->id = kernel_frame.can_id;
+    frame->len = kernel_frame.can_dlc;
+    memcpy(frame->data, kernel_frame.data, kernel_frame.can_dlc);
 
     return 0;
 }

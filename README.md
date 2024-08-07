@@ -128,6 +128,14 @@ I didn't like having to include the system file can.h in client code because it 
 
 `using the updated file can/can.h as a model, modify can/can.c to match the function prototypes defined there`
 
+```c
+
+ls;s
+
+
+
+```
+
 #### build the library
 
 `create a Makefile in can that compiles can/can.c and builds a static library`
@@ -215,3 +223,4 @@ Answers to the Questions
   - yes but not consistently
   - it helps if the dev
   </div>
+/h

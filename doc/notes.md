@@ -1,16 +1,6 @@
 ---
 ---
 
-## <img src="/anth1.png"/>
-
-## <img src="/anth2.png"/>
-
-## <img src="/anth3.png"/>
-
----
-
-<div style="font-size:2em;">
-
 # Code Generation with Anthropic Claude-1.5-Sonnet and Aider-chat
 
 ## SETUP
@@ -197,11 +187,10 @@ Manually update .gitignore to exclude build artifacts
 
 #### get rid of unsafe pointers
 
-`in g/main.go, insteead of using an unsafe pointer to the can frame data, assume the value received is a 32 bit signed integer. convert the bytes to a 32 bit signed integer using shifts and adds.`
+`in g/main.go, instead of using an unsafe pointer to the can frame data, assume the value received is a 32 bit signed integer. convert the bytes to a 32 bit signed integer using shifts and adds.`
 
-`fix the
 
-WORKING
+WORKING!
 
 ## Conclusion
 
@@ -213,5 +202,9 @@ Answers to the Questions
   - sometimes
 - can it fix errors
   - yes but not consistently
-  - it helps if the dev
+  - it helps if the dev knows what is going on
+- does it require manual intervention
+  - yes
+  - sometimes it is just easier to edit the code than prompt
+  - aider always re-reads the affected files so it sees any manual changes
   </div>

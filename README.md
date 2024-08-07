@@ -200,11 +200,18 @@ Manually update .gitignore to exclude build artifacts
 
 `fix the
 
-WORKING
+WORKING!
+
+####
+
+- add comments to can/can.h, can/can.c,c/sender.c and g/main.go
+
+
+
 
 ## Conclusion
 
-Answers to the Questions
+Answers to the Questions/help
 
 - does it save time?
   - yes it helps by generating boilerplate

@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 #include "can.h"
 
 int main() {

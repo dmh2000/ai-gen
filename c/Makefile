@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Werror -I../can
+CFLAGS=-Wall -Werror -I../can -std=c11
 LDFLAGS=-L../can -lcan
 
 sender: sender.c

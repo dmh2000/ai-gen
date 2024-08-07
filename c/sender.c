@@ -16,6 +16,8 @@ int main() {
     frame.id = 0x100;
     frame.len = 4;
 
+    struct timespec sleep_time = {0, 100000000}; // 100 ms
+
     while (1) {
         memcpy(frame.data, &count, 4);
         if (write_can_socket(sock, &frame) < 0) {
@@ -23,7 +25,7 @@ int main() {
             break;
         }
         count++;
-        usleep(100000); // 10 Hz
+        nanosleep(&sleep_time, NULL); // 10 Hz
     }
 
     close_can_socket(sock);

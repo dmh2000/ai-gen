@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
-#include "can/can.h"
+#include "can.h"
 
 int main() {
     int sock = open_can_socket("can0");

@@ -1,10 +1,9 @@
 ---
 ---
-
-## <img src="./doc/anth1.png"/>
-
-## <img src="./doc/anth2.png"/>
-
+<img src="./doc/anth1.png"/>
+---
+<img src="./doc/anth2.png"/>
+---
 <img src="./doc/anth3.png"/>
 
 ---
@@ -206,6 +205,9 @@ WORKING!
 ####
 
 - add comments to can/can.h, can/can.c,c/sender.c and g/main.go
+
+
+
 
 ## Conclusion
 

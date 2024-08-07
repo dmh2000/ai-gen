@@ -1,11 +1,11 @@
 ---
 ---
 
-## <img src="/anth1.png"/>
+## <img src="./doc/anth1.png"/>
 
-## <img src="/anth2.png"/>
+## <img src="./doc/anth2.png"/>
 
-## <img src="/anth3.png"/>
+<img src="./doc/anth3.png"/>
 
 ---
 
@@ -201,11 +201,15 @@ Manually update .gitignore to exclude build artifacts
 
 `fix the
 
-WORKING
+WORKING!
+
+####
+
+- add comments to can/can.h, can/can.c,c/sender.c and g/main.go
 
 ## Conclusion
 
-Answers to the Questions
+Answers to the Questions/help
 
 - does it save time?
   - yes it helps by generating boilerplate

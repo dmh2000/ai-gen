@@ -13,7 +13,7 @@ int main() {
 
     int32_t count = 0;
     struct can_frame_t frame;
-    frame.id = 0x123;
+    frame.id = 0x100;
     frame.len = 4;
 
     while (1) {

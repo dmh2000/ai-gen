@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 typedef struct can_frame_t {
-    uint8_t id;
+    int32_t id;
     uint8_t len;
     uint8_t data[8];
 } can_frame_t;

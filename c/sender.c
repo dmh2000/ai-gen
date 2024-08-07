@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
@@ -6,7 +7,7 @@
 #include "can.h"
 
 int main() {
-    int sock = open_can_socket("can0");
+    int sock = open_can_socket("vcan0");
     if (sock < 0) {
         perror("open_can_socket");
         return 1;

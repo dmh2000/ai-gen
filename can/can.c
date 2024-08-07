@@ -39,6 +39,7 @@ int write_can_socket(int sock, struct can_frame_t *frame) {
     can_frame.can_id = frame->id;
     can_frame.can_dlc = frame->len;
     memcpy(can_frame.data, frame->data, 8);
+    // printf("%d %d %u%u%u%u\n", can_frame.can_id, can_frame.can_dlc, can_frame.data[0], can_frame.data[1], can_frame.data[2], can_frame.data[3]);    
     int bytes_written = write(sock, &can_frame, sizeof(struct can_frame));
     if (bytes_written < 0) {
         perror("write");

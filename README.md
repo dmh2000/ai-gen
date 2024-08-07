@@ -1,5 +1,11 @@
 ---
 ---
+GEMINI_API_KEY=abc
+ANTHROPIC_API_KEY=def
+OPENAI_API_KEY=ghi
+OPENAI_API_BASE=https://api.together.xyz/v1
+> aider --model openai/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo
+---
 
 ## <img src="./doc/anth1.png"/>
 

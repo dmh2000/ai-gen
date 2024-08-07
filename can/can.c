@@ -6,6 +6,7 @@
 #include <linux/if.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include "can.h"
 
 // Function to open a CAN socket
 int open_can_socket(const char *interface) {
@@ -33,8 +34,12 @@ int open_can_socket(const char *interface) {
 }
 
 // Function to write to a CAN socket
-int write_can_socket(int sock, struct can_frame *frame) {
-    int bytes_written = write(sock, frame, sizeof(struct can_frame));
+int write_can_socket(int sock, struct can_frame_t *frame) {
+    struct can_frame can_frame;
+    can_frame.can_id = frame->id;
+    can_frame.can_dlc = frame->len;
+    memcpy(can_frame.data, frame->data, 8);
+    int bytes_written = write(sock, &can_frame, sizeof(struct can_frame));
     if (bytes_written < 0) {
         perror("write");
         return -1;
@@ -43,12 +48,16 @@ int write_can_socket(int sock, struct can_frame *frame) {
 }
 
 // Function to read from a CAN socket
-int read_can_socket(int sock, struct can_frame *frame) {
-    int bytes_read = read(sock, frame, sizeof(struct can_frame));
+int read_can_socket(int sock, struct can_frame_t *frame) {
+    struct can_frame can_frame;
+    int bytes_read = read(sock, &can_frame, sizeof(struct can_frame));
     if (bytes_read < 0) {
         perror("read");
         return -1;
     }
+    frame->id = can_frame.can_id;
+    frame->len = can_frame.can_dlc;
+    memcpy(frame->data, can_frame.data, 8);
     return bytes_read;
 }
 

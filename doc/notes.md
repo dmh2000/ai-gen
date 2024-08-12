@@ -1,6 +1,20 @@
 # Code Generation with Anthropic Claude-1.5-Sonnet and Aider-chat
 
-## SETUP
+## History
+
+I started in 1980 on IBM mainframes, punchcards and vary awkward editors. It was terrible. I lived through two fundamental, breakthrough changes in software development and now there is a third upheaval.
+1. 80's-90's
+  - Unix, MSDOS, Windows, Mac OS . 
+  - 10x productivity increase
+2. 1999 
+  - I used to have a wall of programming reference books. We had web search but it was terrible. 
+  - Then Google came along. Little by little my bookshelf dwindeled. Online resources that you could find took off. There is no need for paper books
+  - 10x productively 
+3. AI Coding
+  - This is the most exciting one yet. I just sorry I will only participate in the beginning stages. 
+  - 10x, 20x .. 100x ?
+
+## Lets get into the live coding
 
 ### 1. Clone starter repo from github
 
@@ -95,7 +109,7 @@ This exercise is using the Anthropic Claude-1.5-Sonnet LLM for code generation. 
 
 **Aider** is a command line tool that connects to the LLM and supports a continuous conversation. It can be used with most of the big-name LLM's with the proper setup. Aider connects to Claude via the Anthropic API. But you don't need any knowledge of how that works. It's pretty much the same as using a browser-based interface to an LLM but it eliminates the copy/paste steps.
 
-One feature of Aider that other command line interfaces (Maestro) don't have is that Aider uses or creates a local git repo and it commits all the changes it makes. This gives you a history of what happened, and you can /undo commits if you don't like the result. If you don't already have a git repo it will ask if it can create one.
+One feature of Aider that other command line interfaces (Maestro) don't have is that **Aider uses or creates a local git repo and it commits all the changes it makes. This gives you a history of what happened, and you can /undo commits if you don't like the result.** If you don't already have a git repo it will ask if it can create one. Be sure to work on a branch, not main.
 
 
 #### Anthropic setup
@@ -214,9 +228,14 @@ Manually update .gitignore to exclude build artifacts
 
 Should Be WORKING!
 
-####
+#### Claude-Dev
+
+Claude-Dev runs as a VS Code extension and can do similar things as Aider. I prefer the separate Aider command line. Claude-Dev excels at refactoring larger code bases. So lets do some of that.
+
+`improve the code in this project`
 
 - add comments to can/can.h, can/can.c,c/sender.c and g/main.go
+- error handling
 
 ## Conclusion
 
@@ -235,3 +254,18 @@ Answers to the Questions
   - yes
   - sometimes it is just easier to edit the code than prompt
   - aider always re-reads the affected files so it sees any manual changes
+
+  ## References
+
+  - [AICodeKing](https://www.youtube.com/@AICodeKingAiCodeKing)
+    - very good up to date AI coding tool evaluations and usage
+  - [Aider](https://aider.chat/)
+    - what I use for composing a project
+  - [Claude-Dev](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
+    - I use this for code review and refactoring
+  - [Github Copilot](https://github.com/features/copilot)
+    - what I use for code completion. $10 a month. Does seem to upload your code.
+    - [alternatives that don't retain your code. ](https://bito.ai/blog/free-github-copilot-alternatives-for-vs-code/)
+  - [Anthropic Claude-3.5-Sonnet](https://www.anthropic.com/)
+    - The LLM I use. Seems to be the best for coding, beats most benchmarks. API rate is input $3/input token, $15/output token. Subscription not required
+    

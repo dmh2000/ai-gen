@@ -11,9 +11,22 @@
 
 <div style="font-size:2em;">
 
-# Code Generation with Anthropic Claude-1.5-Sonnet and Aider-chat
 
-## SETUP
+## History
+
+I started in 1980 on IBM mainframes, punchcards and vary awkward editors. It was terrible. I lived through two fundamental, breakthrough changes in software development and now there is a third upheaval.
+1. 80's-90's
+  - Unix, MSDOS, Windows, Mac OS . 
+  - 10x productivity increase
+2. 1999 
+  - I used to have a wall of programming reference books. We had web search but it was terrible. 
+  - Then Google came along. Little by little my bookshelf dwindeled. Online resources that you could find took off. There is no need for paper books
+  - 10x productively 
+3. AI Coding
+  - This is the most exciting one yet. I just sorry I will only participate in the beginning stages. 
+  - 10x, 20x .. 100x ?
+
+## Lets get into the live coding
 
 ### 1. Clone starter repo from github
 
@@ -109,6 +122,7 @@ This exercise is using the Anthropic Claude-1.5-Sonnet LLM for code generation. 
 **Aider** is a command line tool that connects to the LLM and supports a continuous conversation. It can be used with most of the big-name LLM's with the proper setup. Aider connects to Claude via the Anthropic API. But you don't need any knowledge of how that works. It's pretty much the same as using a browser-based interface to an LLM but it eliminates the copy/paste steps.
 
 One feature of Aider that other command line interfaces (Maestro) don't have is that **Aider uses or creates a local git repo and it commits all the changes it makes. This gives you a history of what happened, and you can /undo commits if you don't like the result.** If you don't already have a git repo it will ask if it can create one. Be sure to work on a branch, not main.
+
 
 #### Anthropic setup
 
@@ -228,14 +242,47 @@ Should Be WORKING!
 
 #### Claude-Dev
 
-[Claude-Dev](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev) runs as a VS Code extension and can do similar things as Aider. I prefer the separate Aider command line but if you prefer staying in VS Code exclusively, then this seems the best tool for now. 
-
-Claude-Dev excels at refactoring larger code bases. So lets do some of that.
+Claude-Dev runs as a VS Code extension and can do similar things as Aider. I prefer the separate Aider command line. Claude-Dev excels at refactoring larger code bases. So lets do some of that.
 
 `improve the code in this project`
 
 - add comments to can/can.h, can/can.c,c/sender.c and g/main.go
 - error handling
+
+
+1. Use smart pointers: Replace raw pointers with std::unique_ptr to improve memory management and prevent memory leaks.
+2. Add const-correctness: Mark member functions that don't modify the object as const.
+3. Use nullptr instead of NULL: This is a more type-safe alternative in modern C++.
+4. Add noexcept specifiers: For functions that don't throw exceptions, like isEmpty().
+5. Use a templated compare function: This allows for more flexibility in key comparison.
+6. Add move semantics: Implement move constructors and move assignment operators for better performance.
+7. Use std::optional for the get function: This provides a more idiomatic way to handle the case when a key is not found.
+
+# Models and 3rd Party Tools
+
+## Running Local Models 
+
+In my experience the easiest way to run local models is to use [Ollama](https://ollama.com). Ollama is a command line tool that can run models locally.  It is written in Go and is very easy to install.  It is also very easy to use.  You just tell it to run a model and it will download and run it.
+
+## Code Completion
+
+I have used GitHub Copilot ($10/month) for 2 years and it works really well, but it does indicate that your code gets uploaded to their servers, probably for training, not for retention. But that means your code might show up in someone elses ai generated code. 
+
+Instead of GitHub Copilit, you can use [Continue.dev](https://www.continue.dev/) which is a VS Code extension that can be pointed at just about any LLM. 
+
+Continue.dev uses two different models, a chat model (I use Anthropic Claude-3.5-sonnet) and an autocomplete model (I use Mistral Codestral). The chat model is used for refactoring and the autocomplete model is used for generating code. 
+
+I point continue.dev at [Mistral Codestral](https://mistral.ai/news/codestral/) which supposedly does not upload your code when you use their server. It can be run locally for free using Ollama. It seems to work as well as Copilot, maybe with less delay, both locally and Mistral server. Its reasonably easy to [install Ollama](https://ollama.com/download) and point it at Codestral. No API key needed and 100% free. Although it can run without a GPU, it will be really slow. Best to have a reasonably powerful GPU, preferably NVidia but AMD is being supported more and more.
+
+## Code Generation Tools and models
+
+For code generation on a terminal I use [Aider](https://aider.chat/) which is a command line tool that can be pointed at just about any LLM. With two monitors I prefer to use aider on the terminal so it doesn't hog the VSCode layout. 
+
+If I want to generate code in VSCode directly, I use [Claude-Dev](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev) or [Continue.dev](https://www.continue.dev/) which are VS Code extensions that can be pointed at just about any LLM.
+
+In both Aider and Claude Dev I use [Anthropic Claude-3.5-sonnet](https://www.anthropic.com/news/claude-3-5-sonnet). Its not free and its not available to run locally. Aider, Claude-Dev and Continue.dev can all use the Claude-3.5-sonnet model. It seems to work best for me, in any of the 3 tools. 
+
+If you want a local or free model, you can use one of the code generation models available from Ollama, such as [DeepSeek-coder-v2](https://ollama.com/library/deepseek-coder-v2) or even the new, massive [Meta llama3.1 405b](https://ollama.com/library/llama3.1).
 
 ## Conclusion
 
@@ -255,19 +302,21 @@ Answers to the Questions
   - sometimes it is just easier to edit the code than prompt
   - aider always re-reads the affected files so it sees any manual changes
 
-
   ## References
 
+  - [Ollama](https://ollama.com/)
+    - an  LLM runner that can download and run locally or in cloud
   - [AICodeKing](https://www.youtube.com/@AICodeKingAiCodeKing)
-    - very good up to date AI coding tool evaluations and usage
+    - Youtube tutorials that are very good and up to date all about LLMs and coding
   - [Aider](https://aider.chat/)
-    - what I use for composing a project
+    - what I use for composing a project when I want to run it in a separate terminal
   - [Claude-Dev](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
-    - I use this for code review and refactoring
+    - I use this for code review and refactoring if I want to run it as a VSCode extension.
   - [Github Copilot](https://github.com/features/copilot)
     - what I use for code completion. $10 a month. Does seem to upload your code.
-    - [alternatives that don't retain your code. ](https://bito.ai/blog/free-github-copilot-alternatives-for-vs-code/)
+  - [Continue.dev](https://www.continue.dev/)   
+    - you can replace GitHub Copilot with Continue.dev (free)
   - [Anthropic Claude-3.5-Sonnet](https://www.anthropic.com/)
     - The LLM I use. Seems to be the best for coding, beats most benchmarks. API rate is input $3/input token, $15/output token. Subscription not required
-  
+
   </div>
